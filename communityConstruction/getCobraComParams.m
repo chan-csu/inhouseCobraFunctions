@@ -34,14 +34,14 @@ for j = 1:numel(param2get)
         %return empty if no default
         varargout{j} = paramDefault(param2get{j}, modelCom);
     end
-    %if calling for a directory, make sure to return a new directory
-    if strcmp(param2get{j}, 'directory')
-        k = 0;
-        while exist(varargout{j}, 'file')
-            k = k + 1;
-            varargout{j} = [paramDefault.directory num2str(k)];
-        end
-    end
+%     %if calling for a directory, make sure to return a new directory
+%     if strcmp(param2get{j}, 'directory')
+%         k = 0;
+%         while exist(varargout{j}, 'file')
+%             k = k + 1;
+%             varargout{j} = [paramDefault.directory num2str(k)];
+%         end
+%     end
 end
 
 
