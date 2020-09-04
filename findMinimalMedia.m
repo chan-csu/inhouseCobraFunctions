@@ -1,13 +1,13 @@
 function [media, addedComponents] = findMinimalMedia(modelCom, varargin)
-% Find a set of community metabolites that serves as a minimal media for
-% the set of organisms 'organism' (species abbreviation or id) in 'modelCom'.
+% Find one or more minimal media for a single-organism model or a community model
 %
 % USAGE:
-%    [metCom, metComId] = findMinMedia(modelCom,lbMedium,ubMedium,organism,solverParam)
+%    [media, addedComponents] = findMinMedia(modelCom, K, baseMedia, candidates, members)
 %
 % INPUT:
 %    modelCom          single-organism model or community model with additional fields 
 %                      *.indCom and *.infoCom constructed using `createCommModel`
+%
 % OPTIONAL INPUTS:
 %    K                 identify up to K different media (default 1)
 %    baseMedia         cell array of exchange reactions representing the media components that must be present
@@ -18,6 +18,12 @@ function [media, addedComponents] = findMinimalMedia(modelCom, varargin)
 %    members           cell array of members required to grow (must be subset of infoCom.spAbbr) 
 %                      or index vector (subset of 1:numel(infoCom.spAbbr)
 %                      (only appliable for community models, default all members)
+%
+% OUTPUTS:
+%    media             cell array of exchange reactions forming the minimal media
+%                      If K > 1, a cell array of K cell arrays is returned, each being a medium
+%    addedComponents   cell array of exchange reactions in media but not in baseMedia
+%                      If K > 1, a cell array of K cell arrays is returned.
 
 %% argument handling modified from `functionTemplate`
 optArgDefaultValidator = {...
