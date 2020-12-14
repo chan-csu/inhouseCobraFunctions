@@ -245,7 +245,7 @@ end
 colNames0 = colNames;
 if printVarProp.full
     % append variable values in the solution to variable names
-    colNames = strcat(colNames, ' (', numToFormattedString(solToPrint.(matchName.(modelFormat).full)), ')');
+    colNames = strcat(colNames(:), ' (', numToFormattedString(solToPrint.(matchName.(modelFormat).full)), ')');
 end
 
 %% get sizes of other print types
@@ -325,6 +325,12 @@ switch typeToPrint
         fprintf(fid, '%s model:\n', modelFormat);
         if ~isempty(fileToPrint)
           fclose(fid);
+        end
+        if strcmp(modelFormat, 'cplex')
+            tmp = model;
+            model = Cplex();
+            model.Model = tmp;
+            clear tmp
         end
         printModel(model, [], 'obj', solToPrint, colNames0, rowNames, fileToPrint, modelFormat)
         printModel(model, 1:m, 'con', solToPrint, colNames0, rowNames, fileToPrint, modelFormat)
