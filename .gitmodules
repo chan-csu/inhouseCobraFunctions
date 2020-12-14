@@ -1,0 +1,3 @@
+[submodule "test/modelsChan2017"]
+	path = test/modelsChan2017
+	url = https://github.com/chan-csu/modelsChan2017
