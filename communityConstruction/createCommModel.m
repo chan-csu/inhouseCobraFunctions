@@ -779,7 +779,21 @@ modelCom.infoCom = infoCom;
 modelCom.indCom = indCom;
 
 if isfield(modelCom, 'description') && iscell(modelCom.description)
-    modelCom.description = ['Community model built from ' strjoin(modelCom.description, ', ')];
+    description = modelCom.description;
+    for j = 1:numel(description)
+        if isstruct(description{j})
+            if isfield(description{j}, 'name')
+                if ~isempty(description{j}.name)
+                    description{j} = description{j}.name;
+                else
+                    description{j} = ['Organism ' num2str(j)];
+                end
+            else
+                error('model.description for the %d input model is a structure but without the field ''name''. Add the model name in model.description.', j)
+            end
+        end
+    end
+    modelCom.description = ['Community model built from ' strjoin(description, ', ')];
 end
 if isfield(modelCom, 'osenseStr')
     modelCom.osenseStr = 'max';
