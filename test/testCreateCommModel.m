@@ -37,6 +37,10 @@ seedRxn = seedRxn.seedRxn;
 models = cell(size(modelsToLoad));
 
 for j = 1:numel(modelsToLoad)
+    % Can't read those model using readCbModel since some formatting of the
+    % model structures are already outdated. Need some cosmetic fixing
+    %     models{j} = readCbModel([modelDir filesep modelsToLoad{j}]);
+    % Use load model directly instead
     model = load([modelDir filesep modelsToLoad{j}]);
     models{j} = model.model;
 end
@@ -141,3 +145,5 @@ end
 %% compile community model
 
 modelCom = createCommModel(models, options);
+% check out modelCom.infoCom and modelCom.indCom. They are useful in
+% manipulating the model
